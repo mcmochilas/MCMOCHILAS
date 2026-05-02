@@ -6,7 +6,7 @@
 
   <!-- SEO Primary -->
   <title>MC Mochilas | Mochila 45L para Delivery e Motoboy – Impermeável com Isopor Laminado</title>
-  <meta name="description" content="Mochila profissional 45 litros para delivery e motoboy. Impermeável, reforçada, com caixa de isopor laminada inclusa. Frete grátis para Itapema e região. Pague em até 10 corridas. Fabricação própria em Itapema/SC." />
+  <meta name="description" content="Mochila profissional 45 litros para delivery e motoboy. Impermeável, reforçada, com caixa de isopor laminada inclusa. Frete grátis para Itapema e região. Pague em até 50 corridas. Fabricação própria em Itapema/SC." />
   <meta name="keywords" content="mochila para delivery, mochila motoboy, mochila 45 litros, bag delivery, mochila impermeável motoboy, mochila com isopor, mochila para entregador, mochila térmica delivery, equipamento para motoboy, mochila delivery Itapema SC, mochila para moto, bag motoboy 45L, mochila de entrega profissional, MC Mochilas, mochila reforçada delivery, comprar mochila motoboy" />
   <meta name="author" content="MC Mochilas" />
   <meta name="robots" content="index, follow" />
@@ -16,7 +16,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mcmochilas.com.br/" />
   <meta property="og:title" content="MC Mochilas | Mochila 45L para Delivery – Impermeável com Isopor" />
-  <meta property="og:description" content="Mochila profissional 45L para motoboy e delivery. Impermeável, reforçada, com isopor laminado incluso. Frete grátis em Itapema/SC. Pague em 10 corridas!" />
+  <meta property="og:description" content="Mochila profissional 45L para motoboy e delivery. Impermeável, reforçada, com isopor laminado incluso. Frete grátis em Itapema/SC. Pague em 50 corridas!" />
   <meta property="og:image" content="motoboy-empe.png" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:site_name" content="MC Mochilas" />
@@ -377,7 +377,7 @@
     .stat-label { font-size: .8rem; color: var(--text-muted); margin-top: 4px; }
 
     /* ===== FOR WHOM ===== */
-    .section { padding: 80px 0; }
+    .section { padding: 48px 0; }
     .audience-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -443,10 +443,55 @@
       position: sticky;
       top: 90px;
     }
-    .showcase-main-img {
+    /* Carrossel showcase */
+    .showcase-carousel {
+      position: relative;
       width: 100%;
+      aspect-ratio: 1 / 1;
+      user-select: none;
+    }
+    .carousel-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: block;
-      border-radius: 20px;
+      pointer-events: none;
+    }
+    .carousel-slides {
+      position: absolute;
+      inset: 0;
+    }
+    .carousel-slide {
+      position: absolute;
+      inset: 6%;
+      width: 88%;
+      height: 88%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity .65s ease;
+    }
+    .carousel-slide.active { opacity: 1; }
+    .carousel-dots {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+    .carousel-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: none;
+      background: var(--border);
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      padding: 0;
+    }
+    .carousel-dot.active {
+      background: var(--orange);
+      transform: scale(1.35);
     }
     .showcase-features {
       display: grid;
@@ -475,6 +520,52 @@
     }
     .feat-card h4 { font-size: .88rem; font-weight: 700; line-height: 1.3; margin: 0; }
     .feat-card p { font-size: .76rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+
+    /* Card exclusivo – Alça Reforçada */
+    .feat-card--exclusive {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      text-align: left;
+      align-items: center;
+      background: linear-gradient(120deg, var(--dark3) 0%, rgba(255,85,0,.09) 100%);
+      border-color: var(--orange);
+      box-shadow: 0 0 32px rgba(255,85,0,.22), inset 0 0 80px rgba(255,85,0,.04);
+      padding: 20px;
+      gap: 20px;
+    }
+    .feat-card--exclusive img {
+      width: 180px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 2px solid var(--orange);
+      flex-shrink: 0;
+    }
+    .feat-card--exclusive .feat-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .feat-badge-exclusive {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--orange);
+      color: #fff;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .feat-card--exclusive h4 { font-size: 1rem; }
+    @media (max-width: 480px) {
+      .feat-card--exclusive { flex-direction: column; text-align: center; align-items: center; }
+      .feat-card--exclusive .feat-card-text { align-items: center; }
+      .feat-badge-exclusive { align-self: center; }
+    }
 
     /* ===== SHIPPING ===== */
     .shipping-section { background: var(--dark2); }
@@ -587,17 +678,10 @@
       border-radius: var(--radius);
       overflow: hidden;
     }
-    .testimonial-img-placeholder {
+    .testimonial-img {
       width: 100%;
-      aspect-ratio: 9/16;
-      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--text-muted);
-      font-size: .82rem;
+      height: auto;
+      display: block;
       border-bottom: 1px solid var(--border);
     }
     .testimonial-body { padding: 18px 20px; }
@@ -1023,8 +1107,8 @@
       user-select: none;
     }
     .float-video-circle {
-      width: 72px;
-      height: 72px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--orange);
@@ -1127,7 +1211,7 @@
     .modal-video-close svg { flex-shrink: 0; }
     @media (max-width: 600px) {
       .float-video-btn { left: 14px; bottom: 20px; }
-      .float-video-circle { width: 60px; height: 60px; }
+      .float-video-circle { width: 80px; height: 80px; }
       .float-video-label { font-size: .62rem; padding: 2px 8px; }
     }
 
@@ -1202,7 +1286,7 @@
     <div class="container">
       <div class="hero-inner">
         <div class="hero-badge">
-          💰 Retorno do investimento em até 10 corridas
+          💰 Retorno do investimento em até 50 corridas
         </div>
         <h1 class="hero-title">
           <span class="block">Invista em sua bag e</span>
@@ -1210,7 +1294,7 @@
           <span class="block"> em poucas corridas</span>
         </h1>
         <p class="hero-sub">
-          Com nossa Mochila de Delivery 45 Litros você entrega mais por viagem, faz mais corridas por dia e ainda se diferencia da concorrência. <strong>Em até 10 entregas, o produto já se pagou.</strong>
+          Com nossa Mochila de Delivery 45 Litros você entrega mais por viagem, faz mais corridas por dia e ainda se diferencia da concorrência. <strong>Em até 50 entregas, o produto já se pagou.</strong>
         </p>
         <ul class="hero-bullets">
           <li>45 litros – cabe marmitas, lanches e pedidos maiores</li>
@@ -1260,84 +1344,6 @@
     </div>
   </div>
 
-  <!-- ROI SECTION -->
-  <section class="roi-section">
-    <div class="container">
-      <div class="text-center">
-        <div class="roi-pill">📈 Retorno rápido e calculado</div>
-        <h2 class="section-title">Sua bag se paga em <span class="highlight">até 10 corridas</span></h2>
-        <p class="roi-result-text">
-          Um motoboy pode receber até <strong style="color:var(--text)">R$&nbsp;25,00 por corrida</strong>.
-          Com a mochila por R$&nbsp;249,90, em apenas <strong style="color:var(--text)">10 entregas</strong> o investimento já está coberto —
-          e tudo que vem depois é <strong style="color:var(--green)">lucro líquido</strong>.
-        </p>
-      </div>
-
-      <div class="roi-calc">
-        <div class="roi-block">
-          <div class="roi-val" style="color:var(--orange)">R$&nbsp;25</div>
-          <div class="roi-lbl">valor médio<br>por corrida</div>
-        </div>
-        <div class="roi-op">×</div>
-        <div class="roi-block">
-          <div class="roi-val" style="color:var(--yellow)">10</div>
-          <div class="roi-lbl">corridas para<br>pagar a mochila</div>
-        </div>
-        <div class="roi-op">=</div>
-        <div class="roi-block highlight-block">
-          <div class="roi-val">✓ Paga!</div>
-          <div class="roi-lbl">R$&nbsp;249,90<br>recuperados</div>
-        </div>
-      </div>
-
-      <div class="roi-steps">
-        <div class="roi-step">
-          <div class="roi-step-num">1</div>
-          <h4>Compre hoje</h4>
-          <p>Receba sua mochila profissional em até 1 dia útil e comece a trabalhar com mais estrutura.</p>
-        </div>
-        <div class="roi-step">
-          <div class="roi-step-num">2</div>
-          <h4>Faça mais corridas</h4>
-          <p>Com 45L de capacidade você aceita pedidos maiores, leva mais volume e aumenta o faturamento por viagem.</p>
-        </div>
-        <div class="roi-step">
-          <div class="roi-step-num">3</div>
-          <h4>Bag paga em 10 entregas</h4>
-          <p>Com R$&nbsp;249,90 e ganhos de até R$&nbsp;25 por corrida, em 10 entregas o investimento está quitado. Da 11ª em diante é só lucro.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARA QUEM É -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center">
-        <div class="tag">Para quem é</div>
-        <h2 class="section-title">Feita para quem <span class="highlight">vive na estrada</span></h2>
-        <p class="section-sub">Do motoboy autônomo ao restaurante local — a MC Mochilas é a mochila para delivery ideal para quem precisa de agilidade e confiança nas entregas.</p>
-      </div>
-      <div class="audience-grid">
-        <div class="audience-card">
-          <div class="audience-icon">🏍️</div>
-          <h3>Motoboys Autônomos</h3>
-          <p>Mais espaço, mais pedidos, mais renda. A <strong>mochila para motoboy</strong> reforçada aguenta o ritmo de quem trabalha de verdade no trânsito.</p>
-        </div>
-        <div class="audience-card">
-          <div class="audience-icon">🍔</div>
-          <h3>Restaurantes e Lanchonetes</h3>
-          <p>Entregue marmitas, lanches e pedidos quentes mantendo a temperatura até a porta do cliente com a <strong>mochila térmica de delivery</strong> e isopor laminado incluso.</p>
-        </div>
-        <div class="audience-card">
-          <div class="audience-icon">💊</div>
-          <h3>Farmácias e Delivery Local</h3>
-          <p>Carregue remédios e produtos com segurança. Compartimento organizado e proteção total para pedidos frágeis.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- SHOWCASE DA MOCHILA -->
   <section class="section showcase-section">
     <div class="container">
@@ -1348,13 +1354,37 @@
       </div>
       <div class="showcase-inner">
 
-        <!-- Imagem principal -->
+        <!-- Carrossel principal -->
         <div class="showcase-main-wrap">
-          <img src="mochila/Mochila - Principal.png" alt="MC Mochila 45L - Vista principal" class="showcase-main-img" />
+          <div class="showcase-carousel" id="showcaseCarousel">
+            <img src="fundo circulo laranja.png" class="carousel-bg" alt="" aria-hidden="true" />
+            <div class="carousel-slides">
+              <img src="Mochila/Mochila - Principal - Sem Fundo.png"           class="carousel-slide active" alt="MC Mochila 45L – Vista principal" />
+              <img src="Mochila/Mochila - Lateral - Sem Fundo.png"             class="carousel-slide"        alt="MC Mochila 45L – Vista lateral" />
+              <img src="Mochila/Mochila - Aberta - Sem Fundo.png"              class="carousel-slide"        alt="MC Mochila 45L – Interior aberto" />
+              <img src="Mochila/Bolso Frontal Transparente - Sem Fundo.png"    class="carousel-slide"        alt="MC Mochila 45L – Bolso frontal" />
+            </div>
+            <div class="carousel-dots">
+              <button class="carousel-dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+              <button class="carousel-dot"        onclick="goToSlide(1)" aria-label="Slide 2"></button>
+              <button class="carousel-dot"        onclick="goToSlide(2)" aria-label="Slide 3"></button>
+              <button class="carousel-dot"        onclick="goToSlide(3)" aria-label="Slide 4"></button>
+            </div>
+          </div>
         </div>
 
         <!-- Cards de diferenciais -->
         <div class="showcase-features">
+
+          <!-- Card exclusivo -->
+          <div class="feat-card feat-card--exclusive">
+            <img src="Mochila/Alça Reforçada.gif" alt="Alça Reforçada Exclusiva MC Mochilas" />
+            <div class="feat-card-text">
+              <span class="feat-badge-exclusive">⭐ Exclusivo MC Mochilas</span>
+              <h4>Alça Reforçada</h4>
+              <p>Costura dupla com reforço da alça. Suporta o peso máximo com segurança e distribui o esforço no ombro — conforto real para quem faz 8h ou mais de entrega por dia. Um diferencial que você só encontra na MC Mochilas.</p>
+            </div>
+          </div>
 
           <div class="feat-card">
             <img src="mochila/Fecho Plástico.png" alt="Fecho Plástico Reforçado" />
@@ -1392,6 +1422,34 @@
             <p>Para guardar objetos pessoais ou exibir a logomarca do seu serviço de entrega.</p>
           </div>
 
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA QUEM É -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center">
+        <div class="tag">Para quem é</div>
+        <h2 class="section-title">Feita para quem <span class="highlight">vive na estrada</span></h2>
+        <p class="section-sub">Do motoboy autônomo ao restaurante local — a MC Mochilas é a mochila para delivery ideal para quem precisa de agilidade e confiança nas entregas.</p>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-icon">🏍️</div>
+          <h3>Motoboys Autônomos</h3>
+          <p>Mais espaço, mais pedidos, mais renda. A <strong>mochila para motoboy</strong> reforçada aguenta o ritmo de quem trabalha de verdade no trânsito.</p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">🍔</div>
+          <h3>Restaurantes e Lanchonetes</h3>
+          <p>Entregue marmitas, lanches e pedidos quentes mantendo a temperatura até a porta do cliente com a <strong>mochila térmica de delivery</strong> e isopor laminado incluso.</p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">💊</div>
+          <h3>Farmácias e Delivery Local</h3>
+          <p>Carregue remédios e produtos com segurança. Compartimento organizado e proteção total para pedidos frágeis.</p>
         </div>
       </div>
     </div>
@@ -1535,6 +1593,56 @@
     </div>
   </section>
 
+  <!-- ROI SECTION -->
+  <section class="roi-section">
+    <div class="container">
+      <div class="text-center">
+        <div class="roi-pill">📈 Retorno rápido e calculado</div>
+        <h2 class="section-title">Sua bag se paga em <span class="highlight">até 50 corridas</span></h2>
+        <p class="roi-result-text">
+          Com um ganho médio de <strong style="color:var(--text)">R$&nbsp;5,00 por corrida</strong>,
+          em apenas <strong style="color:var(--text)">50 entregas</strong> a mochila já está paga —
+          e tudo que vem depois é <strong style="color:var(--green)">lucro líquido</strong>.
+        </p>
+      </div>
+
+      <div class="roi-calc">
+        <div class="roi-block">
+          <div class="roi-val" style="color:var(--orange)">R$&nbsp;5</div>
+          <div class="roi-lbl">ganho médio<br>por corrida</div>
+        </div>
+        <div class="roi-op">×</div>
+        <div class="roi-block">
+          <div class="roi-val" style="color:var(--yellow)">50</div>
+          <div class="roi-lbl">corridas para<br>pagar a mochila</div>
+        </div>
+        <div class="roi-op">=</div>
+        <div class="roi-block highlight-block">
+          <div class="roi-val">✓ Paga!</div>
+          <div class="roi-lbl">R$&nbsp;249,90<br>recuperados</div>
+        </div>
+      </div>
+
+      <div class="roi-steps">
+        <div class="roi-step">
+          <div class="roi-step-num">1</div>
+          <h4>Compre hoje</h4>
+          <p>Receba sua mochila profissional em até 1 dia útil e comece a trabalhar com mais estrutura.</p>
+        </div>
+        <div class="roi-step">
+          <div class="roi-step-num">2</div>
+          <h4>Faça mais corridas</h4>
+          <p>Com 45L de capacidade você aceita pedidos maiores, leva mais volume e aumenta o faturamento por viagem.</p>
+        </div>
+        <div class="roi-step">
+          <div class="roi-step-num">3</div>
+          <h4>Bag paga em 50 entregas</h4>
+          <p>Com R$&nbsp;249,90 e ganho médio de R$&nbsp;5 por corrida, em 50 entregas o investimento está quitado. Da 51ª em diante é só lucro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- DEPOIMENTOS -->
   <section class="section" id="depoimentos">
     <div class="container">
@@ -1545,47 +1653,35 @@
       </div>
       <div class="testimonials-grid" style="margin-top:48px;">
         <div class="testimonial-card">
-          <div class="testimonial-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Print do cliente 1</span>
-            <small>📲 Substitua pela imagem</small>
-          </div>
+          <img src="dp_01.PNG" alt="Cliente recebendo a MC Mochila 45L" class="testimonial-img" />
           <div class="testimonial-body">
             <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Melhor mochila que já usei em anos de delivery. Cabe tudo e não deixa entrar água nem na chuva mais forte."</p>
+            <p class="testimonial-text">"Excelente produto."</p>
             <div class="testimonial-author">
-              <strong>Ricardo M.</strong>
-              <span>Motoboy autônomo • Itapema/SC</span>
+              <strong>Cliente verificado</strong>
+              <span>Avaliação • 07 abr. 2026</span>
             </div>
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Print do cliente 2</span>
-            <small>📲 Substitua pela imagem</small>
-          </div>
+          <img src="dp_02.PNG" alt="Cliente recebendo a MC Mochila 45L" class="testimonial-img" />
           <div class="testimonial-body">
             <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Compramos 3 para o nosso restaurante. Os motoboys adoraram, e o isopor mantém a comida quente até o destino!"</p>
+            <p class="testimonial-text">"Chegou antes do prazo ótima qualidade."</p>
             <div class="testimonial-author">
-              <strong>Ana Paula S.</strong>
-              <span>Proprietária • Lanchonete Sabor & Cia</span>
+              <strong>@camilanalerb</strong>
+              <span>Avaliação • 17 mar. 2026</span>
             </div>
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-img-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Print do cliente 3</span>
-            <small>📲 Substitua pela imagem</small>
-          </div>
+          <img src="dp_03.PNG" alt="Cliente recebendo a MC Mochila 45L" class="testimonial-img" />
           <div class="testimonial-body">
             <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"Entrega foi super rápida, chegou no dia seguinte! A mochila é resistente e cabe bem na moto. Recomendo demais."</p>
+            <p class="testimonial-text">"Produto recebido e aprovado!"</p>
             <div class="testimonial-author">
-              <strong>João Carlos L.</strong>
-              <span>Entregador • Farmácia Popular</span>
+              <strong>@ancinelodie</strong>
+              <span>Instagram Story</span>
             </div>
           </div>
         </div>
@@ -1940,6 +2036,31 @@
         btn.textContent = 'Consultar';
       }
     }
+
+    /* ===== CARROSSEL SHOWCASE ===== */
+    (function () {
+      const slides = document.querySelectorAll('#showcaseCarousel .carousel-slide');
+      const dots   = document.querySelectorAll('#showcaseCarousel .carousel-dot');
+      let current  = 0;
+      let timer;
+
+      function goToSlide(idx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = idx;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        clearInterval(timer);
+        timer = setInterval(advance, 3200);
+      }
+
+      function advance() {
+        goToSlide((current + 1) % slides.length);
+      }
+
+      window.goToSlide = goToSlide;
+      timer = setInterval(advance, 3200);
+    })();
   </script>
 
 </body>
