@@ -1123,6 +1123,21 @@
       .audience-grid { grid-template-columns: 1fr; }
       .showcase-inner { grid-template-columns: 1fr; gap: 48px; }
       .showcase-sticky { position: static; }
+      /* feat-tabs vira grid 2 colunas no mobile */
+      .feat-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-radius: var(--radius);
+      }
+      .feat-tab { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
+      .feat-tab:nth-child(odd):last-child { grid-column: 1 / -1; }
+      /* Primeiro tab (alça reforçada) ocupa as 2 colunas */
+      .feat-tab:first-child {
+        grid-column: 1 / -1;
+        border-right: none;
+      }
+      /* Remove borda direita dos tabs da coluna direita */
+      .feat-tab:nth-child(even) { border-right: none; }
       .trust-grid { grid-template-columns: 1fr; }
       .confeccao-cta { grid-column: auto; }
       .testimonials-grid { grid-template-columns: 1fr; }
@@ -1135,7 +1150,19 @@
     }
     @media (max-width: 600px) {
       .section { padding: 64px 0; }
-      .header-price { display: none; }
+      /* Header mobile: logo numa linha, WA menor, preço abaixo */
+      .header-inner { padding: 10px 16px; flex-wrap: nowrap; gap: 8px; }
+      .logo-text { font-size: 1.1rem; white-space: nowrap; }
+      .logo-wrap img { height: 32px; }
+      .header-right { flex-direction: column; align-items: flex-end; gap: 4px; }
+      .header-price {
+        display: flex;
+        font-size: .72rem;
+        order: 2;
+      }
+      .header-price strong { font-size: .82rem; }
+      .btn-wa { font-size: .75rem; padding: 7px 12px; gap: 6px; order: 1; }
+      .btn-wa svg { width: 14px; height: 14px; }
       .cep-form { flex-direction: column; }
       .float-wa { bottom: 20px; right: 16px; }
       .float-video { left: 12px; bottom: 20px; }
@@ -1145,8 +1172,9 @@
       .urgency-content { padding: 0; flex-wrap: wrap; justify-content: center; gap: 12px; }
       .modal-gallery { grid-template-columns: repeat(2, 1fr); }
       .roi-op { font-size: 1.2rem; }
-      .feat-tab { gap: 12px; padding: 16px; }
-      .feat-tab-thumb, .feat-tab-thumb-gif { width: 60px; height: 38px; }
+      .feat-tab { gap: 10px; padding: 14px 12px; }
+      .feat-tab-thumb { width: 48px; height: 48px; }
+      .feat-tab-thumb-gif { width: 64px; height: 40px; }
       .feat-tab-desc { display: none; }
       .hero-price-main { font-size: 2rem; }
       .btn-primary { font-size: .95rem; padding: 15px 28px; }
@@ -1173,7 +1201,7 @@
       </a>
       <div class="header-right">
         <div class="header-price">
-          <span>Kit por</span>
+          <span>BAG por</span>
           <strong>R$&nbsp;249,90</strong>
         </div>
         <a href="https://wa.me/5547000000000?text=Olá!%20Tenho%20interesse%20na%20Mochila%2045L%20para%20delivery." class="btn-wa" target="_blank" rel="noopener">
@@ -1233,7 +1261,7 @@
 
         <div class="hero-price-row reveal reveal-delay-3">
           <span class="hero-price-main">R$&nbsp;249<sup>,90</sup></span>
-          <span class="hero-price-note">kit completo · à vista no Pix</span>
+          <span class="hero-price-note">Mochila de Entrega · à vista no Pix</span>
         </div>
 
         <div class="hero-cta-row reveal reveal-delay-4">
@@ -1687,7 +1715,7 @@
       <p style="color:var(--text-muted);max-width:480px;margin:0 auto;" class="reveal reveal-delay-2">Garanta sua mochila 45L hoje e entregue com mais profissionalismo, capacidade e eficiência.</p>
 
       <div class="price-display reveal reveal-delay-2">
-        <div class="price-from">Kit completo por apenas</div>
+        <div class="price-from">BAG DE ENTREGA POR APENAS</div>
         <div class="price-main">R$&nbsp;249<sup>,90</sup></div>
         <div class="price-note">À vista no Pix · Consulte parcelamento pelo WhatsApp</div>
       </div>
