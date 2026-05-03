@@ -551,7 +551,30 @@
     }
 
     /* ===== AUDIENCE ===== */
-    .audience-section { background: var(--dark); }
+    .audience-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .audience-parallax {
+      position: absolute;
+      top: -120px;
+      left: 0;
+      right: 0;
+      bottom: -120px;
+      background: url('todosentregadores.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    .audience-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      z-index: 1;
+    }
+    .audience-section .container {
+      position: relative;
+      z-index: 2;
+    }
     .audience-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -559,8 +582,10 @@
       margin-top: 52px;
     }
     .audience-card {
-      background: var(--dark3);
-      border: 1px solid var(--border);
+      background: rgba(10,10,10,.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.08);
       border-radius: var(--radius);
       padding: 36px 28px;
       transition: border-color .25s, transform .25s;
@@ -1130,7 +1155,6 @@
         border-radius: var(--radius);
       }
       .feat-tab { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
-      .feat-tab:nth-child(odd):last-child { grid-column: 1 / -1; }
       /* Primeiro tab (alça reforçada) ocupa as 2 colunas */
       .feat-tab:first-child {
         grid-column: 1 / -1;
@@ -1138,6 +1162,18 @@
       }
       /* Remove borda direita dos tabs da coluna direita */
       .feat-tab:nth-child(even) { border-right: none; }
+      /* Tabs normais: imagem centralizada no topo, texto abaixo */
+      .feat-tab:not(:first-child) {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 18px 12px;
+        gap: 10px;
+      }
+      .feat-tab:not(:first-child) .feat-tab-thumb {
+        width: 64px;
+        height: 64px;
+      }
       .trust-grid { grid-template-columns: 1fr; }
       .confeccao-cta { grid-column: auto; }
       .testimonials-grid { grid-template-columns: 1fr; }
@@ -1172,8 +1208,9 @@
       .urgency-content { padding: 0; flex-wrap: wrap; justify-content: center; gap: 12px; }
       .modal-gallery { grid-template-columns: repeat(2, 1fr); }
       .roi-op { font-size: 1.2rem; }
-      .feat-tab { gap: 10px; padding: 14px 12px; align-items: flex-start; }
+      .feat-tab:first-child { gap: 10px; padding: 14px 12px; align-items: flex-start; }
       .feat-tab-thumb { width: 48px; height: 48px; }
+      .feat-tab:not(:first-child) .feat-tab-thumb { width: 56px; height: 56px; }
       .feat-tab-thumb-gif { width: 72px; height: auto; }
       .feat-tab-desc { display: block; font-size: .7rem; }
       .hero-price-main { font-size: 2rem; }
@@ -1214,10 +1251,9 @@
 
   <!-- HERO -->
   <section class="hero">
-    <picture>
-      <source media="(min-width:900px)" srcset="hero-desktop.jpg" />
-      <img src="motoboy-empe.png" alt="Motoboy com Mochila MC Mochilas 45L" class="hero-bg" id="heroBg" />
-    </picture>
+    <video class="hero-bg" id="heroBg" autoplay muted loop playsinline preload="auto">
+      <source src="video-mochila.mp4" type="video/mp4" />
+    </video>
     <div class="hero-overlay"></div>
     <div class="hero-content container">
       <div class="hero-inner">
@@ -1416,6 +1452,14 @@
             </div>
           </div>
 
+          <div class="feat-tab" data-slide="1" onclick="selectFeatTab(this, 1)">
+            <img src="mochila/Mochila - Lateral.png" alt="Bolso Lateral Duplo" class="feat-tab-thumb" />
+            <div class="feat-tab-body">
+              <div class="feat-tab-title">Bolso Lateral Duplo</div>
+              <p class="feat-tab-desc">4 bolsos laterais no total — 2 em cada lado. Cabe refrigerante, garrafa d'água ou embalagens extras sem ocupar o compartimento principal.</p>
+            </div>
+          </div>
+
           <div class="feat-tab" data-slide="3" onclick="selectFeatTab(this, 3)">
             <img src="mochila/Bolso Frontal Transparente.png" alt="Bolso Frontal" class="feat-tab-thumb" />
             <div class="feat-tab-body">
@@ -1431,6 +1475,8 @@
 
   <!-- AUDIENCE -->
   <section class="section audience-section">
+    <div class="audience-parallax" id="audienceParallax"></div>
+    <div class="audience-overlay"></div>
     <div class="container">
       <div class="text-center">
         <div class="section-tag reveal">Para quem é</div>
@@ -1831,10 +1877,12 @@
     })();
 
     /* ===== HERO BG ZOOM ===== */
-    window.addEventListener('load', function () {
+    (function () {
       var bg = document.getElementById('heroBg');
-      if (bg) bg.classList.add('loaded');
-    });
+      if (!bg) return;
+      bg.addEventListener('canplay', function () { bg.classList.add('loaded'); }, { once: true });
+      if (bg.readyState >= 3) bg.classList.add('loaded');
+    })();
 
     /* ===== COUNTDOWN ===== */
     (function () {
@@ -2018,6 +2066,32 @@
         fecharModalConfeccao();
       }
     });
+
+    /* ===== AUDIENCE PARALLAX ===== */
+    (function () {
+      var el      = document.getElementById('audienceParallax');
+      var section = el && el.parentElement;
+      if (!el || !section) return;
+
+      function getSectionTop() {
+        var t = 0, node = section;
+        while (node) { t += node.offsetTop || 0; node = node.offsetParent; }
+        return t;
+      }
+
+      function update() {
+        var scrollY     = window.pageYOffset;
+        var sectionTop  = getSectionTop();
+        var sectionMid  = sectionTop + section.offsetHeight / 2;
+        var viewportMid = scrollY + window.innerHeight / 2;
+        var y = (viewportMid - sectionMid) * 0.25;
+        el.style.transform = 'translateY(' + y + 'px)';
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    })();
   </script>
 </body>
 </html>
